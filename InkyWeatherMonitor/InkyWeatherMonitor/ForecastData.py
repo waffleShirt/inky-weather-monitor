@@ -15,6 +15,8 @@ class ForecastData:
 
 	currentData = None 
 
+	# TODO: Build request string from a dictionary of parameters
+
 	def LoadAPIKey(self):
 		f = open("config.txt", "r")
 		lines = f.readlines() 
@@ -33,8 +35,7 @@ class ForecastData:
 		response = requests.get(requestText)
 		if response.status_code == 200:
 			self.currentData = response.json()
-			print(self.currentData)
-
+			#print(self.currentData)
 
 
 

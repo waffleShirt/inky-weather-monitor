@@ -28,5 +28,11 @@ class PersonalData:
 			self.currentData = response.json()
 			print(self.currentData)
 
+	def GetCurrentTemp(self):
+		if self.currentData != None:
+			return self.currentData.observations.metric.temp
+		else:
+			return 0
+
 
 
