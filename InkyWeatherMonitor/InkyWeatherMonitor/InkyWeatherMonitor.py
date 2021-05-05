@@ -1,4 +1,4 @@
-from inky import InkyMockWHAT
+from inky import InkyWHAT, InkyMockWHAT
 from PIL import Image, ImageFont, ImageDraw
 from font_fredoka_one import FredokaOne
 
@@ -7,17 +7,20 @@ import os
 # Environment vars
 from dotenv import load_dotenv
 load_dotenv()
-test = os.environ.get('INKY_ENV') 
+inkyEnv = os.environ.get('INKY_ENV')
+updateInterval = 0 
 
 inky_display = None 
-if (test == 'MOCK'):
+if (inkyEnv == 'MOCK'):
 	inky_display = InkyMockWHAT("red")
+	updateInterval = 5
+	inky_display.set_border(inky_display.RED)
 elif (test == 'REAL'):
-	inky_display = InkyWHAT("red")
+	inkyEnv = InkyWHAT("black")
+	updateInterval = 60
+	inky_display.set_border(inky_display.BLACK)
 else:
 	print("You screwed up")
-
-inky_display.set_border(inky_display.RED)
 
 img = Image.new("P", (inky_display.WIDTH, inky_display.HEIGHT))
 draw = ImageDraw.Draw(img)
@@ -33,16 +36,21 @@ s = sched.scheduler(time.time, time.sleep)
 
 def do_something(sc):
 	print("Doing stuff")
-	s.enter(5, 1, do_something, (sc,))
+	s.enter(updateInterval, 1, do_something, (sc,))
 
 def UpdateDisplay(pd):
-	print("Update Display:")
+	pd.GetCurrentData() 
+	currTemp = str(pd.currentData['observations'][0]['metric']['temp'])
+
+	t = time.localtime()
+	current_time = time.strftime("%H:%M:%S", t)
+	print("Update Display at: " + current_time + " - Temp: " + currTemp)
 	
 	# Clear the image buffer
 	img = Image.new("P", (inky_display.WIDTH, inky_display.HEIGHT))
 	draw = ImageDraw.Draw(img)
 
-	currTemp = str(pd.currentData['observations'][0]['metric']['temp'])
+	#currTemp = str(pd.currentData['observations'][0]['metric']['temp'])
 	currTempString = "Temp: " + currTemp + "C"
 	x = 50
 	y = 50
@@ -50,10 +58,10 @@ def UpdateDisplay(pd):
 	inky_display.set_image(img)
 	inky_display.show()
 
-	pd.currentData['observations'][0]['metric']['temp'] -= 0.1
+	#pd.currentData['observations'][0]['metric']['temp'] -= 0.1
 
 	# Setup the function to run again
-	s.enter(5, 1, UpdateDisplay, (pd,))
+	s.enter(updateInterval, 1, UpdateDisplay, (pd,))
 
 PD = PersonalData() 
 PD.LoadAPIKey()

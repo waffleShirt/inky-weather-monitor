@@ -26,7 +26,7 @@ class PersonalData:
 		response = requests.get(requestText)
 		if response.status_code == 200:
 			self.currentData = response.json()
-			print(self.currentData)
+			#print(self.currentData)
 
 	def GetCurrentTemp(self):
 		if self.currentData != None:
