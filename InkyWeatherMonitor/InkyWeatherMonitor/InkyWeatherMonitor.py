@@ -12,7 +12,7 @@ updateInterval = 0
 
 inky_display = None 
 if (inkyEnv == 'MOCK'):
-	inky_display = InkyMockWHAT("red")
+	inky_display = InkyMockWHAT("black")
 	updateInterval = 5
 	inky_display.set_border(inky_display.RED)
 elif (inkyEnv == 'REAL'):
@@ -88,7 +88,13 @@ draw.text((x,y), message2, inky_display.RED, font)
 #inky_display.set_image(img)
 #inky_display.show()
 
-icon = Image.open("04-3.png")
+# So far this is the best looking setup for icons. Open the original icon in GIMP and set it to indexed using the Inky palette.
+# Export image as PNG with background colour saved (as white?). The image will show as all white in the windows image viewer, but when it loads
+# on the Inky screen the actual icon will be a solid black, and the background will be white. Converting the image to RGBA and using the image itself
+# as the mask is why this works. All white pixels are copied into the new image, any black pixels if they existed would preserve the orignal pixel in
+# the image being copied to. Anything else in between would create trnasparency effects. See the Paste An Image section on this page: http://docs.pimoroni.com/inkyphat/
+# This won't work for coloured images, as the non white/black pixels will create a transparency effect. For now it works, but should be considered pretty hacky. 
+icon = Image.open("05.png")
 icon = icon.resize((100, 100), resample=Image.NONE)
 pal_img = Image.new("P", (1, 1))
 pal_img.putpalette((255, 255, 255, 0, 0, 0, 255, 0, 0) + (0, 0, 0) * 252)
