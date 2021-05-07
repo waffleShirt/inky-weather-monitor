@@ -22,18 +22,17 @@ elif (inkyEnv == 'REAL'):
 else:
 	print("You screwed up")
 
-img = Image.new("L", (inky_display.WIDTH, inky_display.HEIGHT))
+img = Image.new("P", (400, 300), 255)
 draw = ImageDraw.Draw(img)
 
 font = ImageFont.truetype(FredokaOne, 36)
 
 
-
-icon = Image.open("37-g.png")
+icon = Image.open("37-idx.png")
 icon = icon.resize((100, 100), resample=Image.NONE)
-pal_img = Image.new("L", (1, 1))
-pal_img.putpalette((255, 255, 255, 0, 0, 0, 255, 0, 0) + (0, 0, 0) * 252)
-icon = icon.convert("RGB")#.quantize(palette=pal_img)
+pal_img = Image.new("P", (1, 1))
+pal_img.putpalette((255, 255, 255, 0, 0, 0, 255, 0, 0))
+icon = icon.convert("RGB").quantize(palette=pal_img)
 img.paste(icon, (10,10))
 
 
