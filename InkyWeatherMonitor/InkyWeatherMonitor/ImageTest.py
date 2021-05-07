@@ -28,7 +28,7 @@ draw = ImageDraw.Draw(img)
 font = ImageFont.truetype(FredokaOne, 36)
 
 
-icon = Image.open("37-idx.png")
+icon = Image.open("37-g.png")
 icon = icon.resize((100, 100), resample=Image.NONE)
 pal_img = Image.new("P", (1, 1))
 pal_img.putpalette((255, 255, 255, 0, 0, 0, 255, 0, 0))
