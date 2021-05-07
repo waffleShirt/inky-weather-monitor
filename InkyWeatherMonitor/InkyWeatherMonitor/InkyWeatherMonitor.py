@@ -22,7 +22,7 @@ elif (inkyEnv == 'REAL'):
 else:
 	print("You screwed up")
 
-img = Image.new("P", (inky_display.WIDTH, inky_display.HEIGHT))
+img = Image.new("L", (inky_display.WIDTH, inky_display.HEIGHT))
 draw = ImageDraw.Draw(img)
 
 font = ImageFont.truetype(FredokaOne, 36)
@@ -99,9 +99,9 @@ draw.text((x,y), message2, inky_display.RED, font)
 # Load image and resize as required, then past into image buffer. Simple, that didn't need to take all evening to decide on, did it?
 icon = Image.open("37-g.png")
 icon = icon.resize((100, 100), resample=Image.NONE)
-#pal_img = Image.new("L", (1, 1))
+pal_img = Image.new("LA", (1, 1))
 #pal_img.putpalette((255, 255, 255, 0, 0, 0, 255, 0, 0) + (0, 0, 0) * 252)
-#icon = icon.convert("L")#.quantize(palette=pal_img)
+icon = icon.convert("RGBA")#.quantize(palette=pal_img)
 img.paste(icon, (10,10))
 
 icon2 = Image.open("38-g3.png")

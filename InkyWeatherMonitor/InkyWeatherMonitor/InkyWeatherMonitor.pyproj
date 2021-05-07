@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>25319e9f-0c47-4416-8ca5-b82e5b6f4b4a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>InkyWeatherMonitor.py</StartupFile>
+    <StartupFile>ImageTest.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,6 +22,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ForecastData.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ImageTest.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="InkyWeatherMonitor.py" />
