@@ -85,10 +85,10 @@ x = 200
 y = 200
 draw.text((x,y), message2, inky_display.RED, font)
 
-inky_display.set_image(img)
-inky_display.show()
+#inky_display.set_image(img)
+#inky_display.show()
 
-icon = Image.open("03.png")
+icon = Image.open("04-3.png")
 icon = icon.resize((100, 100), resample=Image.NONE)
 pal_img = Image.new("P", (1, 1))
 pal_img.putpalette((255, 255, 255, 0, 0, 0, 255, 0, 0) + (0, 0, 0) * 252)
