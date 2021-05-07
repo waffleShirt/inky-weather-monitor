@@ -22,7 +22,7 @@ elif (inkyEnv == 'REAL'):
 else:
 	print("You screwed up")
 
-img = Image.new("L", (inky_display.WIDTH, inky_display.HEIGHT))
+img = Image.new("P", (inky_display.WIDTH, inky_display.HEIGHT))
 draw = ImageDraw.Draw(img)
 
 font = ImageFont.truetype(FredokaOne, 36)
@@ -97,27 +97,27 @@ draw.text((x,y), message2, inky_display.RED, font)
 
 # Ok, everything I said above is a total lie. The icons look signficantly better in greyscale. Open icons in GIMP. Image->Mode->Greyscale. Layer->Transparency->Remove alpha channel
 # Load image and resize as required, then past into image buffer. Simple, that didn't need to take all evening to decide on, did it?
-icon = Image.open("37-g.png")
+icon = Image.open("38c.png")
 icon = icon.resize((100, 100), resample=Image.NONE)
-pal_img = Image.new("LA", (1, 1))
+pal_img = Image.new("PA", (1, 1))
 #pal_img.putpalette((255, 255, 255, 0, 0, 0, 255, 0, 0) + (0, 0, 0) * 252)
 icon = icon.convert("RGBA")#.quantize(palette=pal_img)
-img.paste(icon, (10,10))
+img.paste(icon, (10,10), icon)
 
-icon2 = Image.open("38-g3.png")
-icon2 = icon2.resize((100, 100), resample=Image.NONE)
-img.paste(icon2, (110,10))
+#icon2 = Image.open("38-g3.png")
+#icon2 = icon2.resize((100, 100), resample=Image.NONE)
+#img.paste(icon2, (110,10))
 
-# You can also just load the icons directly and convert them to greyscale, but they don't seem to end up looking as smooth as converting them in GIMP. I suspect this is because
-# the image exported from GIMP has an explicit white background, whereas loading the PNG with transparency and converting doesn't work anywhere near as well. 
-icon3 = Image.open("41.png")
-icon3 = icon3.resize((100, 100), resample=Image.NONE)
-icon3 = icon3.convert("L")
-img.paste(icon3, (10,110))
+## You can also just load the icons directly and convert them to greyscale, but they don't seem to end up looking as smooth as converting them in GIMP. I suspect this is because
+## the image exported from GIMP has an explicit white background, whereas loading the PNG with transparency and converting doesn't work anywhere near as well. 
+#icon3 = Image.open("41.png")
+#icon3 = icon3.resize((100, 100), resample=Image.NONE)
+#icon3 = icon3.convert("L")
+#img.paste(icon3, (10,110))
 
-icon4 = Image.open("41-g.png")
-icon4 = icon4.resize((100, 100), resample=Image.NONE)
-img.paste(icon4, (110,110))
+#icon4 = Image.open("41-g.png")
+#icon4 = icon4.resize((100, 100), resample=Image.NONE)
+#img.paste(icon4, (110,110))
 
 inky_display.set_image(img)
 inky_display.show()
