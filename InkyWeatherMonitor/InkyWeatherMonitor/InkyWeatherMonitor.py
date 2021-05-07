@@ -94,12 +94,30 @@ draw.text((x,y), message2, inky_display.RED, font)
 # as the mask is why this works. All white pixels are copied into the new image, any black pixels if they existed would preserve the orignal pixel in
 # the image being copied to. Anything else in between would create trnasparency effects. See the Paste An Image section on this page: http://docs.pimoroni.com/inkyphat/
 # This won't work for coloured images, as the non white/black pixels will create a transparency effect. For now it works, but should be considered pretty hacky. 
-icon = Image.open("05.png")
+
+# Ok, everything I said above is a total lie. The icons look signficantly better in greyscale. Open icons in GIMP. Image->Mode->Greyscale. Layer->Transparency->Remove alpha channel
+# Load image and resize as required, then past into image buffer. Simple, that didn't need to take all evening to decide on, did it?
+icon = Image.open("37-g.png")
 icon = icon.resize((100, 100), resample=Image.NONE)
-pal_img = Image.new("P", (1, 1))
-pal_img.putpalette((255, 255, 255, 0, 0, 0, 255, 0, 0) + (0, 0, 0) * 252)
-icon = icon.convert("RGB").quantize(palette=pal_img)
+#pal_img = Image.new("L", (1, 1))
+#pal_img.putpalette((255, 255, 255, 0, 0, 0, 255, 0, 0) + (0, 0, 0) * 252)
+#icon = icon.convert("L")#.quantize(palette=pal_img)
 img.paste(icon, (10,10))
+
+icon2 = Image.open("38-g3.png")
+icon2 = icon2.resize((100, 100), resample=Image.NONE)
+img.paste(icon2, (110,10))
+
+# You can also just load the icons directly and convert them to greyscale, but they don't seem to end up looking as smooth as converting them in GIMP. I suspect this is because
+# the image exported from GIMP has an explicit white background, whereas loading the PNG with transparency and converting doesn't work anywhere near as well. 
+icon3 = Image.open("41.png")
+icon3 = icon3.resize((100, 100), resample=Image.NONE)
+icon3 = icon3.convert("L")
+img.paste(icon3, (10,110))
+
+icon4 = Image.open("41-g.png")
+icon4 = icon4.resize((100, 100), resample=Image.NONE)
+img.paste(icon4, (110,110))
 
 inky_display.set_image(img)
 inky_display.show()
