@@ -15,8 +15,8 @@ if (inkyEnv == 'MOCK'):
 	inky_display = InkyMockWHAT("red")
 	updateInterval = 5
 	inky_display.set_border(inky_display.RED)
-elif (test == 'REAL'):
-	inkyEnv = InkyWHAT("black")
+elif (inkyEnv == 'REAL'):
+	inky_display = InkyWHAT("black")
 	updateInterval = 60
 	inky_display.set_border(inky_display.BLACK)
 else:
@@ -78,17 +78,30 @@ x = (inky_display.WIDTH / 2) - (w / 2)
 y = (inky_display.HEIGHT / 2) - (h / 2)
 
 draw.text((x, y), message, inky_display.RED, font)
+
+message2 = "Poop"
+w, h = font.getsize(message2)
+x = 200
+y = 200
+draw.text((x,y), message2, inky_display.RED, font)
+
 inky_display.set_image(img)
 inky_display.show()
 
-#img = Image.open("testimg2.png")
-#inky_display.set_image(img)
-#inky_display.show()
+icon = Image.open("03.png")
+icon = icon.resize((100, 100), resample=Image.NONE)
+pal_img = Image.new("P", (1, 1))
+pal_img.putpalette((255, 255, 255, 0, 0, 0, 255, 0, 0) + (0, 0, 0) * 252)
+icon = icon.convert("RGB").quantize(palette=pal_img)
+img.paste(icon, (10,10))
+
+inky_display.set_image(img)
+inky_display.show()
 
 #UpdateDisplay(PD) 
 
-s.enter(5, 1, UpdateDisplay, (PD,))
-s.run()
+#s.enter(5, 1, UpdateDisplay, (PD,))
+#s.run()
 
 wait = input("Press enter to close") 
 
